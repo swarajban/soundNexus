@@ -1,10 +1,9 @@
 $(document).ready(function(){
-	var scIFrame = $('#sc-widget');
+	var scIFrame = $("#sc-widget")[0];
 	var scWidget = SC.Widget(scIFrame);
-
+ 
 	scWidget.bind(SC.Widget.Events.READY, function(){
-		alert("bound to this biatch");
+		
 	});
-
 });
 

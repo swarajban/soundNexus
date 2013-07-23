@@ -19,10 +19,6 @@ app.get("/selector", function(req, res){
 	console.log("Received selector page request from host: " + req.headers.host);
 });
 
-app.get("*", function(req, res){
-	res.render("selector");
-	console.log("Received random page request from host, rendering selector: " + req.headers.host);
-});
 
 // Static files
 app.use(express.static(__dirname + '/public'));
