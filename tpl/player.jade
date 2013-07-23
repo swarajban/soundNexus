@@ -1,12 +1,14 @@
 !!!
 html
 	head
-		title= "Music Selector"
+		title= "Sound Nexus Player"
 		script(src='http://code.jquery.com/jquery-latest.min.js')
 		script(src='/socket.io/socket.io.js')
-		script(src='/selector.js')
+		script(src='https://w.soundcloud.com/player/api.js')
+		script(src='/player.js')
 
 	body
-		.controls
-			input#soundcloudLinkField(style='width:350px;')
-			input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
+		.soundcloudPlayer
+			iframe#sc-widget(src='https://w.soundcloud.com/player/?url=http://api.soundcloud.com/martin-maca-malu/swedish-house-mafia-bbc1-1', width="50%", height="200", scrolling="no")
+
+

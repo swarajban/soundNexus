@@ -9,11 +9,20 @@ app.engine('jade', require('jade').__express);
 
 
 // Routes
+app.get("/player", function(req, res){
+	res.render("player");
+	console.log("Received player page request from host: " + req.headers.host);
+});
+
 app.get("/selector", function(req, res){
 	res.render("selector");
 	console.log("Received selector page request from host: " + req.headers.host);
 });
 
+app.get("*", function(req, res){
+	res.render("selector");
+	console.log("Received random page request from host, rendering selector: " + req.headers.host);
+});
 
 // Static files
 app.use(express.static(__dirname + '/public'));
