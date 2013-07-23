@@ -1,0 +1,11 @@
+{
+    "name": "Sound Nexus",
+    "version": "0.0.0",
+    "description": "Home web media player",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest",
+        "jade": "latest"
+    },
+    "author": "swaraj"
+}

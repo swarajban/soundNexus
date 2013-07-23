@@ -1,0 +1,12 @@
+!!!
+html
+	head
+		title= "Music Selector"
+		script(src='http://code.jquery.com/jquery-latest.min.js')
+		script(src='/socket.io/socket.io.js')
+		script(src='/selector.js')
+
+	body
+		.controls
+			input#soundcloudLinkField(style='width:350px;')
+			input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
