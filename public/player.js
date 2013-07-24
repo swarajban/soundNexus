@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var scWidget = SC.Widget(scIFrame);
 	var scLoaded = false;
 
-	var socket = io.connect('http://localhost:3700');
+	var socket = io.connect();
 	scWidget.bind(SC.Widget.Events.READY, function(){
 		scLoaded = true;
 	});

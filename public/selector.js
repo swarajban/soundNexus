@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var socket = io.connect('http://localhost:3700');
+	var socket = io.connect();
 
 	$('#soundcloudPlayButton').click(function(){
 		var link = $('#soundcloudLinkField').val();
