@@ -31,6 +31,10 @@ io.sockets.on('connection', function(socket){
 	socket.on('playLink', function(data){
 		io.sockets.emit('playLink', data);
 	});
+
+	socket.on('pauseAll', function(data){
+		io.sockets.emit('pauseAll');
+	});
 });
 
 

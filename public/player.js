@@ -24,6 +24,10 @@ $(document).ready(function(){
 		}	
 	});
 
+	socket.on('pauseAll', function(data){
+		pauseAll();
+	});
+
 	var playSoundCloudLink = function(link){
 		if(scLoaded){
 			scWidget.load(link, {auto_play: true});	

@@ -6,4 +6,8 @@ $(document).ready(function(){
 		socket.emit('playLink', {type: 'soundcloud', link: link});
 		$('#soundcloudLinkField').val("");
 	});
+
+	$('#pauseAll').click(function(){
+		socket.emit('pauseAll');
+	});
 });
