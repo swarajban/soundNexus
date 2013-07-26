@@ -20,8 +20,20 @@ $(document).ready(function(){
 				default:
 					break;
 			}
-
 		}	
+	});
+
+	socket.on('resume', function(data){
+		var type = data.type;
+		if(type){
+			switch(type){
+				case 'soundcloud':
+					resumeSoundcloud();
+					break;
+				default:
+					break;
+			}
+		}
 	});
 
 	socket.on('pauseAll', function(data){
@@ -31,6 +43,12 @@ $(document).ready(function(){
 	var playSoundCloudLink = function(link){
 		if(scLoaded){
 			scWidget.load(link, {auto_play: true});	
+		}
+	}
+
+	var resumeSoundcloud = function(){
+		if(scLoaded){
+			scWidget.play();
 		}
 	}
 

@@ -7,6 +7,10 @@ $(document).ready(function(){
 		$('#soundcloudLinkField').val("");
 	});
 
+	$('#soundcloudResumeButton').click(function(){
+		socket.emit('resume', {type: 'soundcloud'});
+	});
+
 	$('#pauseAll').click(function(){
 		socket.emit('pauseAll');
 	});
