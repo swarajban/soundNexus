@@ -11,6 +11,16 @@ $(document).ready(function(){
 		socket.emit('resume', {type: 'soundcloud'});
 	});
 
+	$('#youtubePlayButton').click(function(){
+		var videoId = $('#youtubeVideoIdField').val();
+		socket.emit('playLink', {type: 'youtube', link: videoId});
+		$('#youtubeVideoIdField').val("");
+	});
+
+	$('#youtubeResumeButton').click(function(){
+		socket.emit('resume', {type: 'youtube'});
+	});
+
 	$('#pauseAll').click(function(){
 		socket.emit('pauseAll');
 	});

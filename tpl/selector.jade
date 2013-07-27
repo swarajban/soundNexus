@@ -7,9 +7,14 @@ html
 		script(src='/selector.js')
 
 	body
-		.controls
-			input#soundcloudLinkField(style='width:350px;')
-			input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
-			input#soundcloudResumeButton(type='button', value='Resume Soundcloud')
-			br
-			input#pauseAll(type='button', value='Pause')
+		.input
+			.soundcloud
+				input#soundcloudLinkField(style='width:350px;')
+				input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
+				input#soundcloudResumeButton(type='button', value='Resume Soundcloud')
+			.youtube
+				input#youtubeVideoIdField(style='width:350px;')
+				input#youtubePlayButton(type='button', value='Play Youtube Video')
+				input#youtubeResumeButton(type='button', value='Resume Youtube')
+		br
+		input#pauseAll(type='button', value='Pause')
