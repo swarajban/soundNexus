@@ -68,6 +68,11 @@ $(document).ready(function(){
 				case 'soundcloud':
 					changeSoundcloudVolume(amount);
 					break;
+
+				case 'youtube':
+					changeYoutubeVolume(amount);
+					break;
+
 				default:
 					break;
 			}
@@ -110,7 +115,7 @@ $(document).ready(function(){
 		}
 	};
 
-	// Changes volume
+	// Changes soundcloud volume
 	var changeSoundcloudVolume = function(amount){
 		if(scLoaded){
 			scWidget.getVolume(function(volume){
@@ -139,6 +144,16 @@ $(document).ready(function(){
 	var resumeYoutube = function(){
 		if(youtubeLoaded){
 			youtubePlayer.playVideo();
+		}
+	};
+
+	// Change youtube volume
+	var changeYoutubeVolume = function(amount){
+		if(youtubeLoaded){
+			var currentVolume = youtubePlayer.getVolume();
+			var newVolume = currentVolume + amount;
+			youtubePlayer.setVolume(newVolume);
+			console.log("New youtube volume: " + newVolume);
 		}
 	};
 

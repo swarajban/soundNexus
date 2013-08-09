@@ -29,6 +29,14 @@ $(document).ready(function(){
 		socket.emit('resume', {type: 'youtube'});
 	});
 
+	$('#youtubeIncreaseButton').click(function(){
+		socket.emit('changeVolume', {type: 'youtube', amount:10});
+	});
+
+	$('#youtubeDecreaseButton').click(function(){
+		socket.emit('changeVolume', {type: 'youtube', amount:-10});
+	});
+
 	$('#pauseAll').click(function(){
 		socket.emit('pauseAll');
 	});
