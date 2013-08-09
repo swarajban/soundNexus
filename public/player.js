@@ -60,6 +60,20 @@ $(document).ready(function(){
 		}	
 	});
 
+	socket.on('changeVolume', function(data){
+		var type = data.type;
+		var amount = data.amount;
+		if(type){
+			switch(type){
+				case 'soundcloud':
+					changeSoundcloudVolume(amount);
+					break;
+				default:
+					break;
+			}
+		}
+	});
+
 	// Resume
 	socket.on('resume', function(data){
 		var type = data.type;
@@ -93,6 +107,17 @@ $(document).ready(function(){
 	var resumeSoundcloud = function(){
 		if(scLoaded){
 			scWidget.play();
+		}
+	};
+
+	// Changes volume
+	var changeSoundcloudVolume = function(amount){
+		if(scLoaded){
+			scWidget.getVolume(function(volume){
+				var newVolume = volume + amount;
+				scWidget.setVolume(newVolume);
+				console.log("New soundcloud volume: " + newVolume);
+			});
 		}
 	};
 

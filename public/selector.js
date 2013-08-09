@@ -11,6 +11,14 @@ $(document).ready(function(){
 		socket.emit('resume', {type: 'soundcloud'});
 	});
 
+	$('#soundcloudIncreaseButton').click(function(){
+		socket.emit('changeVolume', {type: 'soundcloud', amount:10});
+	});
+
+	$('#soundcloudDecreaseButton').click(function(){
+		socket.emit('changeVolume', {type: 'soundcloud', amount:-10});
+	});
+
 	$('#youtubePlayButton').click(function(){
 		var videoId = $('#youtubeVideoIdField').val();
 		socket.emit('playLink', {type: 'youtube', link: videoId});
