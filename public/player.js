@@ -60,6 +60,25 @@ $(document).ready(function(){
 		}	
 	});
 
+	socket.on('changeVolume', function(data){
+		var type = data.type;
+		var amount = data.amount;
+		if(type){
+			switch(type){
+				case 'soundcloud':
+					changeSoundcloudVolume(amount);
+					break;
+
+				case 'youtube':
+					changeYoutubeVolume(amount);
+					break;
+
+				default:
+					break;
+			}
+		}
+	});
+
 	// Resume
 	socket.on('resume', function(data){
 		var type = data.type;
@@ -96,6 +115,17 @@ $(document).ready(function(){
 		}
 	};
 
+	// Changes soundcloud volume
+	var changeSoundcloudVolume = function(amount){
+		if(scLoaded){
+			scWidget.getVolume(function(volume){
+				var newVolume = volume + amount;
+				scWidget.setVolume(newVolume);
+				console.log("New soundcloud volume: " + newVolume);
+			});
+		}
+	};
+
 	// Pauses soundcloud player
 	var pauseSoundCloud = function(){
 		if(scLoaded){
@@ -114,6 +144,16 @@ $(document).ready(function(){
 	var resumeYoutube = function(){
 		if(youtubeLoaded){
 			youtubePlayer.playVideo();
+		}
+	};
+
+	// Change youtube volume
+	var changeYoutubeVolume = function(amount){
+		if(youtubeLoaded){
+			var currentVolume = youtubePlayer.getVolume();
+			var newVolume = currentVolume + amount;
+			youtubePlayer.setVolume(newVolume);
+			console.log("New youtube volume: " + newVolume);
 		}
 	};
 
