@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-2.0.3" level="application" />
+    <orderEntry type="library" name="jquery-ui-1.10.3.custom" level="application" />
   </component>
 </module>
 
