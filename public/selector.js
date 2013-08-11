@@ -23,8 +23,13 @@ $(document).ready(function(){
 	});
 
 	$('#youtubePlayButton').click(function(){
-		var videoId = $('#youtubeVideoIdField').val();
-		socket.emit('playLink', {type: 'youtube', link: videoId});
+		var videoUrl = $('#youtubeVideoIdField').val();
+		var idRegex = /\?v\=(\S+)$/;
+		var result = idRegex.exec(videoUrl);
+		if(result){
+			var videoId = result[1];
+			socket.emit('playLink', {type: 'youtube', link: videoId});
+		}
 		$('#youtubeVideoIdField').val("");
 	});
 
