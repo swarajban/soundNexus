@@ -3,9 +3,11 @@ html
 	head
 		title= "Music Selector"
 		script(src='/vendor/jquery-2.0.3.js')
-		script(src='/vendor/jquery-ui-1.10.3.custom.js')
+		script(src='/vendor/jquery-ui.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='/selector.js')
+		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
 
 	body
 		.input
@@ -13,8 +15,7 @@ html
 				input#soundcloudLinkField(style='width:350px;')
 				input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
 				input#soundcloudResumeButton(type='button', value='Resume Soundcloud')
-				input#soundcloudIncreaseButton(type='button', value = 'Increase Soundcloud Volume')
-				input#soundcloudDecreaseButton(type='button', value = 'Decrease Soundcloud Volume')
+				#soundcloudVolumeSlider.volumeSlider
 			.youtube
 				input#youtubeVideoIdField(style='width:350px;')
 				input#youtubePlayButton(type='button', value='Play Youtube Video')

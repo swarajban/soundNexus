@@ -3,10 +3,12 @@ html
 	head
 		title= "Sound Nexus Player"
 		script(src='/vendor/jquery-2.0.3.js')
-		script(src='/vendor/jquery-ui-1.10.3.custom.js')
+		script(src='/vendor/jquery-ui.js')
 		script(src='https://w.soundcloud.com/player/api.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='/player.js')
+		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
 
 	body
 		.soundcloudPlayerSection

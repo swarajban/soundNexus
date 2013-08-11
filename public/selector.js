@@ -11,12 +11,15 @@ $(document).ready(function(){
 		socket.emit('resume', {type: 'soundcloud'});
 	});
 
-	$('#soundcloudIncreaseButton').click(function(){
-		socket.emit('changeVolume', {type: 'soundcloud', amount:10});
-	});
-
-	$('#soundcloudDecreaseButton').click(function(){
-		socket.emit('changeVolume', {type: 'soundcloud', amount:-10});
+	$('#soundcloudVolumeSlider').slider({
+		orientation: "vertical",
+		range: "min",
+		min: 0,
+		max: 100,
+		value: 100,
+		slide: function(event, ui){
+			console.log("Slider value: " + ui.value);
+		}
 	});
 
 	$('#youtubePlayButton').click(function(){
