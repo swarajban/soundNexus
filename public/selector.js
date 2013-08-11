@@ -18,7 +18,7 @@ $(document).ready(function(){
 		max: 100,
 		value: 100,
 		slide: function(event, ui){
-			console.log("Slider value: " + ui.value);
+			socket.emit('changeVolume', {type: 'soundcloud', value: ui.value});
 		}
 	});
 
@@ -32,12 +32,15 @@ $(document).ready(function(){
 		socket.emit('resume', {type: 'youtube'});
 	});
 
-	$('#youtubeIncreaseButton').click(function(){
-		socket.emit('changeVolume', {type: 'youtube', amount:10});
-	});
-
-	$('#youtubeDecreaseButton').click(function(){
-		socket.emit('changeVolume', {type: 'youtube', amount:-10});
+	$('#youtubeVolumeSlider').slider({
+		orientation: "vertical",
+		range: "min",
+		min: 0,
+		max: 100,
+		value: 100,
+		slide: function(event, ui){
+			socket.emit('changeVolume', {type: 'youtube', value: ui.value});
+		}
 	});
 
 	$('#pauseAll').click(function(){

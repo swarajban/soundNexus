@@ -1,3 +1,19 @@
 .volumeSlider{
     height: 200px;
 }
+
+#soundcloudVolumeSlider .ui-slider-range{
+    background: #ff7700;
+}
+
+#soundcloudVolumeSlider .ui-slider-handle{
+    border-color: #ff7700;
+}
+
+#youtubeVolumeSlider .ui-slider-range{
+    background: #c4302b;
+}
+
+#youtubeVolumeSlider .ui-slider-handle{
+    border-color: #c4302b;
+}
