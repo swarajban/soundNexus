@@ -4,8 +4,10 @@ $(document).ready(function(){
 	var scIFrame = $("#sc-widget")[0];
 	var scWidget = SC.Widget(scIFrame);
 	var scLoaded = false;
-	scWidget.bind(SC.Widget.Events.READY, function(){
+	var scCurrentTrackInfo = {};
+	scWidget.bind(SC.Widget.Events.READY, function(data){
 		scLoaded = true;
+		storeSoundcloudTrackInfo();
 	});
 
 	// Youtube init
@@ -31,8 +33,8 @@ $(document).ready(function(){
 			}
 		}, 500);
 	});
-	
-	
+
+
 	// Socket connection init
 	var socket = io.connect();
 
@@ -57,7 +59,7 @@ $(document).ready(function(){
 				default:
 					break;
 			}
-		}	
+		}
 	});
 
 	socket.on('changeVolume', function(data){
@@ -104,7 +106,8 @@ $(document).ready(function(){
 	// Loads and plays a new soundcloud link
 	var playSoundCloudLink = function(link){
 		if(scLoaded){
-			scWidget.load(link, {auto_play: true});	
+			scWidget.load(link, {auto_play: true, callback: storeSoundcloudTrackInfo});
+			toggleSoundcloudPlayProgressEvent(true);
 		}
 	};
 
@@ -112,6 +115,7 @@ $(document).ready(function(){
 	var resumeSoundcloud = function(){
 		if(scLoaded){
 			scWidget.play();
+			toggleSoundcloudPlayProgressEvent(true);
 		}
 	};
 
@@ -127,6 +131,40 @@ $(document).ready(function(){
 	var pauseSoundCloud = function(){
 		if(scLoaded){
 			scWidget.pause();
+			toggleSoundcloudPlayProgressEvent(false);
+		}
+	};
+
+
+	// Starts/stops listening to soundcloud's PLAY_PROGRESS event
+	var toggleSoundcloudPlayProgressEvent = function(toggle){
+		if(scLoaded){
+			if(toggle){
+				scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, onSoundcloudPlayProgress);
+			}
+			else{
+				scWidget.unbind(SC.Widget.Events.PLAY_PROGRESS);
+			}
+		}
+	};
+
+	// Stores current track info on load
+	var storeSoundcloudTrackInfo = function(){
+		scWidget.getCurrentSound(function(songData){
+				scCurrentTrackInfo = songData;
+			}
+		);
+	};
+
+	// On soundcloud play progress, will broadcast progress to soundNexus selectors
+	var onSoundcloudPlayProgress = function(data){
+		if(data.loadedProgress == 1 && scCurrentTrackInfo.hasOwnProperty("duration")){
+			var scData = {};
+			scData.duration = scCurrentTrackInfo.duration / 1000;
+			scData.title = scCurrentTrackInfo.title;
+			scData.currentPosition = data.currentPosition / 1000;
+			// change to emit < once per second
+			socket.emit('playInfo', scData);
 		}
 	};
 

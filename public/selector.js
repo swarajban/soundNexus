@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	var socket = io.connect();
 
+	var currentScTitle = "";
+
 	$('#soundcloudPlayButton').click(function(){
 		var link = $('#soundcloudLinkField').val();
 		socket.emit('playLink', {type: 'soundcloud', link: link});
@@ -51,4 +53,19 @@ $(document).ready(function(){
 	$('#pauseAll').click(function(){
 		socket.emit('pauseAll');
 	});
+
+
+	socket.on('playInfo', function(data){
+		if(data.duration && data.title && data.currentPosition){
+			updateScTitle(data.title);
+			console.log("Duration: " + data.duration + "\tPos: " + data.currentPosition);
+		}
+	});
+
+	var updateScTitle = function(title){
+		if(title != currentScTitle){
+			currentScTitle = title;
+			$('#soundcloudTitle').html(currentScTitle);
+		}
+	}
 });

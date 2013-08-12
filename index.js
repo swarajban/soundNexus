@@ -36,6 +36,10 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('resume', data);
 	});
 
+	socket.on('playInfo', function(data){
+		io.sockets.emit('playInfo', data);
+	});
+
 	socket.on('changeVolume', function(data){
 		io.sockets.emit('changeVolume', data);
 	});
