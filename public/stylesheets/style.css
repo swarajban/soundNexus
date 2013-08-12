@@ -2,11 +2,15 @@
     height: 200px;
 }
 
-#soundcloudVolumeSlider .ui-slider-range{
+.playbackSlider{
+    width: 300px;
+}
+
+.soundcloud .ui-slider-range{
     background: #ff7700;
 }
 
-#soundcloudVolumeSlider .ui-slider-handle{
+.soundcloud .ui-slider-handle{
     border-color: #ff7700;
 }
 

@@ -5,6 +5,7 @@ $(document).ready(function(){
 	var scWidget = SC.Widget(scIFrame);
 	var scLoaded = false;
 	var scCurrentTrackInfo = {};
+	var scLastPositionSent = -1;
 	scWidget.bind(SC.Widget.Events.READY, function(data){
 		scLoaded = true;
 		storeSoundcloudTrackInfo();
@@ -140,6 +141,7 @@ $(document).ready(function(){
 	var toggleSoundcloudPlayProgressEvent = function(toggle){
 		if(scLoaded){
 			if(toggle){
+				scLastPositionSent = -1;
 				scWidget.bind(SC.Widget.Events.PLAY_PROGRESS, onSoundcloudPlayProgress);
 			}
 			else{
@@ -159,12 +161,17 @@ $(document).ready(function(){
 	// On soundcloud play progress, will broadcast progress to soundNexus selectors
 	var onSoundcloudPlayProgress = function(data){
 		if(data.loadedProgress == 1 && scCurrentTrackInfo.hasOwnProperty("duration")){
-			var scData = {};
-			scData.duration = scCurrentTrackInfo.duration / 1000;
-			scData.title = scCurrentTrackInfo.title;
-			scData.currentPosition = data.currentPosition / 1000;
-			// change to emit < once per second
-			socket.emit('playInfo', scData);
+			var currentPosition = data.currentPosition / 1000;
+			var positionDifference = Math.abs(currentPosition - scLastPositionSent);
+			if(positionDifference > 1){
+				var scData = {};
+				scData.type = 'soundcloud';
+				scData.duration = scCurrentTrackInfo.duration / 1000;
+				scData.title = scCurrentTrackInfo.title;
+				scData.currentPosition = currentPosition;
+				socket.emit('playInfo', scData);
+				scLastPositionSent = currentPosition;
+			}
 		}
 	};
 

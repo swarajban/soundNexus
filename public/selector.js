@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var socket = io.connect();
 
 	var currentScTitle = "";
+	var currentScDuration = -1;
 
 	$('#soundcloudPlayButton').click(function(){
 		var link = $('#soundcloudLinkField').val();
@@ -23,6 +24,15 @@ $(document).ready(function(){
 			socket.emit('changeVolume', {type: 'soundcloud', value: ui.value});
 		}
 	});
+
+	$('#soundcloudPlaybackSlider').slider({
+		orientation: "horizontal",
+		range: "min",
+		min: 0,
+		max: 100,
+		value: 0
+	});
+
 
 	$('#youtubePlayButton').click(function(){
 		var videoUrl = $('#youtubeVideoIdField').val();
@@ -56,16 +66,43 @@ $(document).ready(function(){
 
 
 	socket.on('playInfo', function(data){
-		if(data.duration && data.title && data.currentPosition){
-			updateScTitle(data.title);
-			console.log("Duration: " + data.duration + "\tPos: " + data.currentPosition);
+		var type = data.type;
+		if(type){
+			switch(type){
+				case 'soundcloud':
+					onScPlayInfo(data);
+					break;
+
+				default:
+					break;
+			}
 		}
 	});
+
+	var onScPlayInfo = function(data){
+		if(data.duration && data.title && data.currentPosition){
+			updateScTitle(data.title);
+			updateScProgress(data.duration, data.currentPosition);
+		}
+	};
 
 	var updateScTitle = function(title){
 		if(title != currentScTitle){
 			currentScTitle = title;
 			$('#soundcloudTitle').html(currentScTitle);
 		}
-	}
+	};
+
+	var updateScProgress = function(duration, currentPosition){
+		if(duration != currentScDuration){
+			currentScDuration = duration;
+			$('#soundcloudPlaybackSlider').slider("option", "max", currentScDuration);
+		}
+		$('#soundcloudPlaybackSlider').slider("option", "value", currentPosition);
+
+		var durationString = currentScDuration.toString().toHHMMSS();
+		var currentProgressString = currentPosition.toString().toHHMMSS();
+		var progressString = currentProgressString + "/" + durationString;
+		$('#soundcloudProgressText').html(progressString);
+	};
 });
