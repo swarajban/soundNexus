@@ -14,10 +14,10 @@
     border-color: #ff7700;
 }
 
-#youtubeVolumeSlider .ui-slider-range{
+.youtube .ui-slider-range{
     background: #c4302b;
 }
 
-#youtubeVolumeSlider .ui-slider-handle{
+.youtube .ui-slider-handle{
     border-color: #c4302b;
 }

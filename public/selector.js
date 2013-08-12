@@ -4,6 +4,10 @@ $(document).ready(function(){
 	var currentScTitle = "";
 	var currentScDuration = -1;
 
+	var ytAPIKey = 'AIzaSyDcth1OwFR5eEXUcr8ujW23K4OXdJuqyfc';
+	var currentYtId = "";
+	var currentYtDuration = -1;
+
 	$('#soundcloudPlayButton').click(function(){
 		var link = $('#soundcloudLinkField').val();
 		socket.emit('playLink', {type: 'soundcloud', link: link});
@@ -63,6 +67,17 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#youtubePlaybackSlider').slider({
+		orientation: "horizontal",
+		range: "min",
+		min: 0,
+		max: 100,
+		value: 0,
+		stop: function(event, ui){
+			socket.emit('seekTo', {type: 'youtube', value: ui.value});
+		}
+	});
+
 	$('#pauseAll').click(function(){
 		socket.emit('pauseAll');
 	});
@@ -74,6 +89,10 @@ $(document).ready(function(){
 			switch(type){
 				case 'soundcloud':
 					onScPlayInfo(data);
+					break;
+
+				case 'youtube':
+					onYtPlayInfo(data);
 					break;
 
 				default:
@@ -103,9 +122,52 @@ $(document).ready(function(){
 		}
 		$('#soundcloudPlaybackSlider').slider("option", "value", currentPosition);
 
-		var durationString = currentScDuration.toString().toHHMMSS();
-		var currentProgressString = currentPosition.toString().toHHMMSS();
-		var progressString = currentProgressString + "/" + durationString;
+		var progressString = getProgressString(currentScDuration, currentPosition);
 		$('#soundcloudProgressText').html(progressString);
 	};
+
+	var onYtPlayInfo = function(data){
+		if(data.duration && data.id && data.currentPosition){
+			updateYtTitle(data.id);
+			updateYtProgress(data.duration, data.currentPosition);
+		}
+	}
+
+	var updateYtProgress = function(duration, currentPosition){
+		if(duration != currentYtDuration){
+			currentYtDuration = duration;
+			$('#youtubePlaybackSlider').slider("option", "max", currentYtDuration);
+		}
+		$('#youtubePlaybackSlider').slider("option", "value", currentPosition);
+
+		var progressString = getProgressString(currentYtDuration, currentPosition);
+		$('#youtubeProgressText').html(progressString);
+	};
+
+	var updateYtTitle = function(videoId){
+		if(videoId != currentYtId){
+			var baseYtDataApiUrl = 'https://www.googleapis.com/youtube/v3/videos?part=snippet';
+			var requestUrl = baseYtDataApiUrl + '&key=' + ytAPIKey;
+			requestUrl += '&id=' + videoId;
+			$.ajax({
+				url: requestUrl,
+				type: "GET",
+				dataType: "json",
+				success: function(result){
+					if(result.items && result.items.length == 1 && result.items[0].snippet){
+						var title = result.items[0].snippet.title;
+						$('#youtubeTitle').html(title);
+						currentYtId = videoId;
+					}
+				}
+			});
+		}
+	};
+
+	var getProgressString = function(duration, currentProgress){
+		var durationString = duration.toString().toHHMMSS();
+		var currentProgressString = currentProgress.toString().toHHMMSS();
+		return currentProgressString + "/" + durationString;
+	}
+
 });

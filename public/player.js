@@ -14,10 +14,14 @@ $(document).ready(function(){
 	// Youtube init
 	var youtubePlayer;
 	var youtubeLoaded = false;
+	var ytCurrentId = "";
+	var ytCurrentDuration = -1;
+	var ytPollIntervalId = -1;
 	var initYoutube = function(){
 		youtubePlayer = new YT.Player('youtubePlayer',{
 			events:{
-				'onReady': onYoutubePlayerReady
+				'onReady': onYoutubePlayerReady,
+				'onStateChange': onYoutubePlayerStateChange
 			}
 		});
 	};
@@ -93,6 +97,7 @@ $(document).ready(function(){
 					break;
 
 				default:
+					youtubeSeekTo(value);
 					break;
 			}
 		}
@@ -198,10 +203,23 @@ $(document).ready(function(){
 		}
 	};
 
+	var onYoutubePlayerStateChange = function(event){
+		if(event.data == YT.PlayerState.PLAYING){
+			ytCurrentDuration = youtubePlayer.getDuration();
+			var currentUrl = youtubePlayer.getVideoUrl();
+			var idRegex = /\&v\=(\S+)$/;
+			var result = idRegex.exec(currentUrl);
+			if(result){
+				ytCurrentId= result[1];
+			}
+		}
+	};
+
 	// Loads and plays a new youtube video
 	var playYoutubeVideo = function(videoId){
 		if(youtubeLoaded){
 			youtubePlayer.loadVideoById(videoId);
+			togglePollYoutubeProgress(true);
 		}
 	};
 
@@ -209,6 +227,36 @@ $(document).ready(function(){
 	var resumeYoutube = function(){
 		if(youtubeLoaded){
 			youtubePlayer.playVideo();
+			togglePollYoutubeProgress(true);
+		}
+	};
+
+	// Starts or stops a timer that gets youtube player's current progress and broadcasts status to selectors
+	var togglePollYoutubeProgress = function(toggle){
+		if(youtubeLoaded){
+			if(toggle){
+				if(ytPollIntervalId == -1){
+					ytPollIntervalId = setInterval(broadcastYoutubePlayerInfo, 1000);
+				}
+			}
+			else{
+				if(ytPollIntervalId != -1){
+					clearInterval(ytPollIntervalId);
+					ytPollIntervalId = -1;
+				}
+			}
+		}
+	};
+
+
+	var broadcastYoutubePlayerInfo = function(){
+		if(youtubeLoaded){
+			var ytData = {};
+			ytData.type = 'youtube';
+			ytData.duration = ytCurrentDuration;
+			ytData.id = ytCurrentId;
+			ytData.currentPosition = youtubePlayer.getCurrentTime();
+			socket.emit('playInfo', ytData);
 		}
 	};
 
@@ -220,10 +268,18 @@ $(document).ready(function(){
 		}
 	};
 
+	// Seeks to specified location in youtube video
+	var youtubeSeekTo = function(value){
+		if(youtubeLoaded){
+			youtubePlayer.seekTo(value, true);
+		}
+	};
+
 	// Pauses youtube player
 	var pauseYoutube = function(){
 		if(youtubeLoaded){
 			youtubePlayer.pauseVideo();
+			togglePollYoutubeProgress(false);
 		}
 	};
 
