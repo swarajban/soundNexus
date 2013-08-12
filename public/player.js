@@ -63,6 +63,7 @@ $(document).ready(function(){
 		}
 	});
 
+	// Change volume
 	socket.on('changeVolume', function(data){
 		var type = data.type;
 		var value = data.value;
@@ -74,6 +75,21 @@ $(document).ready(function(){
 
 				case 'youtube':
 					changeYoutubeVolume(value);
+					break;
+
+				default:
+					break;
+			}
+		}
+	});
+
+	socket.on('seekTo', function(data){
+		var type = data.type;
+		var value = data.value;
+		if(type){
+			switch(type){
+				case 'soundcloud':
+					soundcloudSeekTo(value);
 					break;
 
 				default:
@@ -127,6 +143,13 @@ $(document).ready(function(){
 			console.log("New soundcloud volume: " + value);
 		}
 	};
+
+	// Seeks to location in soundcloud sound
+	var soundcloudSeekTo = function(value){
+		if(scLoaded){
+			scWidget.seekTo(value * 1000);
+		}
+	}
 
 	// Pauses soundcloud player
 	var pauseSoundCloud = function(){

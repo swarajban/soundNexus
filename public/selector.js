@@ -30,7 +30,10 @@ $(document).ready(function(){
 		range: "min",
 		min: 0,
 		max: 100,
-		value: 0
+		value: 0,
+		stop: function(event, ui){
+			socket.emit('seekTo', {type: 'soundcloud', value: ui.value});
+		}
 	});
 
 

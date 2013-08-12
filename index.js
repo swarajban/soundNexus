@@ -40,6 +40,10 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('playInfo', data);
 	});
 
+	socket.on('seekTo', function(data){
+		io.sockets.emit('seekTo', data);
+	});
+
 	socket.on('changeVolume', function(data){
 		io.sockets.emit('changeVolume', data);
 	});
