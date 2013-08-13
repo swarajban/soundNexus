@@ -129,6 +129,7 @@ $(document).ready(function(){
 	var playSoundCloudLink = function(link){
 		if(scLoaded){
 			scWidget.load(link, {auto_play: true, callback: storeSoundcloudTrackInfo});
+			scCurrentTrackInfo = {};
 			toggleSoundcloudPlayProgressEvent(true);
 		}
 	};
@@ -188,7 +189,7 @@ $(document).ready(function(){
 
 	// On soundcloud play progress, will broadcast progress to soundNexus selectors
 	var onSoundcloudPlayProgress = function(data){
-		if(data.loadedProgress == 1 && scCurrentTrackInfo.hasOwnProperty("duration")){
+		if(scCurrentTrackInfo.duration){
 			var currentPosition = data.currentPosition / 1000;
 			var positionDifference = Math.abs(currentPosition - scLastPositionSent);
 			if(positionDifference > 1){
