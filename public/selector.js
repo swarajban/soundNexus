@@ -8,6 +8,8 @@ $(document).ready(function(){
 	var currentYtId = "";
 	var currentYtDuration = -1;
 
+
+	// Soundcloud UI
 	$('#soundcloudPlayButton').click(function(){
 		var link = $('#soundcloudLinkField').val();
 		socket.emit('playLink', {type: 'soundcloud', link: link});
@@ -41,6 +43,7 @@ $(document).ready(function(){
 	});
 
 
+	// Youtube UI
 	$('#youtubePlayButton').click(function(){
 		var videoUrl = $('#youtubeVideoIdField').val();
 		var idRegex = /\?v\=(\S+)$/;
@@ -83,6 +86,7 @@ $(document).ready(function(){
 	});
 
 
+	// Handle currently playing track's info
 	socket.on('playInfo', function(data){
 		var type = data.type;
 		if(type){
@@ -101,6 +105,7 @@ $(document).ready(function(){
 		}
 	});
 
+	// Soundcloud play info handler
 	var onScPlayInfo = function(data){
 		if(data.duration && data.title && data.currentPosition){
 			updateScTitle(data.title);
@@ -108,6 +113,7 @@ $(document).ready(function(){
 		}
 	};
 
+	// Updates soundcloud currently playing track name
 	var updateScTitle = function(title){
 		if(title != currentScTitle){
 			currentScTitle = title;
@@ -115,6 +121,7 @@ $(document).ready(function(){
 		}
 	};
 
+	// Updates soundcloud progress bar
 	var updateScProgress = function(duration, currentPosition){
 		if(duration != currentScDuration){
 			currentScDuration = duration;
@@ -126,13 +133,15 @@ $(document).ready(function(){
 		$('#soundcloudProgressText').html(progressString);
 	};
 
+	// Youtube play info handler
 	var onYtPlayInfo = function(data){
 		if(data.duration && data.id && data.currentPosition){
 			updateYtTitle(data.id);
 			updateYtProgress(data.duration, data.currentPosition);
 		}
-	}
+	};
 
+	// Updates youtube progress bar
 	var updateYtProgress = function(duration, currentPosition){
 		if(duration != currentYtDuration){
 			currentYtDuration = duration;
@@ -144,6 +153,7 @@ $(document).ready(function(){
 		$('#youtubeProgressText').html(progressString);
 	};
 
+	// Updates youtube currently playing track name
 	var updateYtTitle = function(videoId){
 		if(videoId != currentYtId){
 			var baseYtDataApiUrl = 'https://www.googleapis.com/youtube/v3/videos?part=snippet';
@@ -164,10 +174,11 @@ $(document).ready(function(){
 		}
 	};
 
+	// Generates HH:MM:SS / HH:MM:SS string based on track duration and progress
 	var getProgressString = function(duration, currentProgress){
 		var durationString = duration.toString().toHHMMSS();
 		var currentProgressString = currentProgress.toString().toHHMMSS();
 		return currentProgressString + "/" + durationString;
-	}
+	};
 
 });

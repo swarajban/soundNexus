@@ -203,6 +203,7 @@ $(document).ready(function(){
 		}
 	};
 
+	// Youtube player state change callback stores video id and duration
 	var onYoutubePlayerStateChange = function(event){
 		if(event.data == YT.PlayerState.PLAYING){
 			ytCurrentDuration = youtubePlayer.getDuration();
@@ -249,6 +250,7 @@ $(document).ready(function(){
 	};
 
 
+	// Broadcasts current youtube video progress, duration, and id
 	var broadcastYoutubePlayerInfo = function(){
 		if(youtubeLoaded){
 			var ytData = {};
