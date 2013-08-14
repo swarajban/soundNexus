@@ -81,6 +81,22 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#youtubeSearchButton').click(function(){
+		var query = $('#youtubeSearchQuery').val();
+		var baseYtDataApiUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet';
+		var searchUrl = baseYtDataApiUrl + '&key=' + ytAPIKey;
+		searchUrl += '&maxResults=10';
+		searchUrl += '&q=' + query;
+		$.ajax({
+			url: searchUrl,
+			type: "GET",
+			"dataType": "json",
+			success: function(result){
+				showYoutubeSearchResult(result.items);
+			}
+		});
+	});
+
 	$('#pauseAll').click(function(){
 		socket.emit('pauseAll');
 	});
@@ -173,6 +189,25 @@ $(document).ready(function(){
 			});
 		}
 	};
+
+	// Populates youtube search results and adds click handlers
+	var showYoutubeSearchResult = function(searchResults){
+		var ytSearchResults = $("#youtubeSearchResult").empty();
+		for(var i = 0; i < searchResults.length; i++){
+			var currResult = searchResults[i];
+			var title = currResult.snippet.title;
+			var videoId = currResult.id.videoId;
+			var searchResult = $('<li>' + title + '</li>').
+				addClass('youtubeSearchResult searchResult').
+				click(function(){
+					$('#youtubeSearchQuery').val("");
+					socket.emit('playLink', {type: 'youtube', link: videoId});
+					ytSearchResults.empty();
+				}).
+				appendTo(ytSearchResults);
+		}
+	};
+
 
 	// Generates HH:MM:SS / HH:MM:SS string based on track duration and progress
 	var getProgressString = function(duration, currentProgress){

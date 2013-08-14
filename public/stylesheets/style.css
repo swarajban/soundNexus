@@ -21,3 +21,12 @@
 .youtube .ui-slider-handle{
     border-color: #c4302b;
 }
+
+
+.youtubeSearchResult{
+    cursor:pointer
+}
+
+.youtubeSearchResult:hover{
+    color: #002bff;
+}
