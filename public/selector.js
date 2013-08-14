@@ -202,7 +202,6 @@ $(document).ready(function(){
 				click(function(){
 					$('#youtubeSearchQuery').val("");
 					socket.emit('playLink', {type: 'youtube', link: videoId});
-					ytSearchResults.empty();
 				}).
 				appendTo(ytSearchResults);
 		}
