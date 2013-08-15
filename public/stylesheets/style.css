@@ -23,10 +23,10 @@
 }
 
 
-.youtubeSearchResult{
+.searchResults{
     cursor:pointer
 }
 
-.youtubeSearchResult:hover{
+.searchResultItem:hover{
     color: #002bff;
 }

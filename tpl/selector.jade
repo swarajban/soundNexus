@@ -5,6 +5,7 @@ html
 		script(src='/vendor/jquery-2.0.3.js')
 		script(src='/vendor/jquery-ui.js')
 		script(src='/socket.io/socket.io.js')
+		script(src='http://connect.soundcloud.com/sdk.js')
 		script(src='utils.js')
 		script(src='/selector.js')
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
@@ -20,6 +21,9 @@ html
 				#soundcloudPlaybackSlider.playbackSlider.soundcloud
 				p#soundcloudTitle.songTitle
 				p#soundcloudProgressText.playerProgressText
+				input#soundcloudSearchQuery
+				input#soundcloudSearchButton(type='button', value='Search Soundcloud')
+				ul#soundcloudSearchResult.searchResults
 
 			.youtube
 				input#youtubeVideoIdField(style='width:350px;')
