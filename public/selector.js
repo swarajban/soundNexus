@@ -196,14 +196,19 @@ $(document).ready(function(){
 		for(var i = 0; i < searchResults.length; i++){
 			var currResult = searchResults[i];
 			var title = currResult.snippet.title;
-			var videoId = currResult.id.videoId;
+			var clickHandler = getOnSearchResultClickHandler($('#youtubeSearchQuery'), 'youtube', currResult.id.videoId);
 			var searchResult = $('<li>' + title + '</li>').
 				addClass('youtubeSearchResult searchResult').
-				click(function(){
-					$('#youtubeSearchQuery').val("");
-					socket.emit('playLink', {type: 'youtube', link: videoId});
-				}).
+				click(clickHandler).
 				appendTo(ytSearchResults);
+		}
+	};
+
+	// Returns search result click handler closure
+	var getOnSearchResultClickHandler = function(searchFieldElement, type, link){
+		searchFieldElement.val("");
+		return function(){
+			socket.emit('playLink', {type: type, link: link});
 		}
 	};
 
