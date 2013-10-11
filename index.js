@@ -10,7 +10,7 @@ app.engine('jade', require('jade').__express);
 // Routes
 var routes = require('./routes/routes.js');
 app.use(app.router);
-app.get('/', routes.selector);
+app.get('/', routes.index);
 app.get('/selector', routes.selector);
 app.get('/player', routes.player);
 
