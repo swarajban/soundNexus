@@ -30,7 +30,7 @@ exports.selectRoom = function(req, res){
 	var redis = global.redisClient;
 	redis.smembers('soundnexus:rooms', function(err, replies){
 		var rooms = replies;
-		res.render('selectRoom', {rooms: rooms, sup: 'swaraj'});
+		res.render('selectRoom', {rooms: rooms});
 	});
 }
 

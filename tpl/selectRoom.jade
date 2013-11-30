@@ -11,12 +11,12 @@ html
 
 	body
 		.content
-			form
-				input#rooms(type='hidden', value=rooms)
-				select(name="selectRoom")
-					for item in rooms
-						option #{item}
-
-
-
-
+			select#roomSelector
+				for item in rooms
+					option #{item}
+			br
+			br
+			input#goToSelector(type='button', value='Go to selector')
+			br
+			br
+			input#goToPlayer(type='button', value='Go to player')

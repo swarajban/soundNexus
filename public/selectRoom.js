@@ -1,7 +1,17 @@
 $(document).ready(function(){
+	$('#goToSelector').click(function(){
+		var roomName = 	$('#roomSelector').val();
+		var currentLocation = window.location.href;
+		var newPath = 'selector/' + roomName;
+		var newLocation = currentLocation.replace('selectRoom', newPath);
+		window.location.href = newLocation;
+	});
 
-	var rooms = $("#rooms").val();
-	alert(rooms);
-//	{rooms: rooms, sup: 'swaraj'}
-//	alert("ready son");
+	$('#goToPlayer').click(function(){
+		var roomName = 	$('#roomSelector').val();
+		var currentLocation = window.location.href;
+		var newPath = 'player/' + roomName;
+		var newLocation = currentLocation.replace('selectRoom', newPath);
+		window.location.href = newLocation;
+	})
 });
