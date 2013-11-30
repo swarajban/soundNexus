@@ -23,8 +23,8 @@ app.use(express.static(__dirname + '/public'));
 // Routes
 app.use(app.router);
 app.get('/', routes.index);
-app.get('/selector', routes.selectRoom);
-app.get('/player', routes.selectRoom);
+app.get('/selector', routes.index);
+app.get('/player', routes.index);
 app.get('/selector/:roomName', routes.selector);
 app.get('/player/:roomName', routes.player);
 app.get('/selectRoom', routes.selectRoom);

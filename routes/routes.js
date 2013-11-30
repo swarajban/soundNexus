@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-	console.log("Received index page request from host: " + req.headers.host);
+	console.log("Received page request from host: " + req.headers.host);
 	res.redirect('/selectRoom');
 };
 
