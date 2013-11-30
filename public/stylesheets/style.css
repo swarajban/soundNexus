@@ -30,3 +30,11 @@
 .searchResultItem:hover{
     color: #002bff;
 }
+
+.connected{
+    color: green;
+}
+
+.disconnected{
+    color:red;
+}

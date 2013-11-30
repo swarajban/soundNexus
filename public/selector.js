@@ -4,6 +4,7 @@ $(document).ready(function(){
 
 	var isConnected = false;
 	var heartbeatIntervalId = null;
+	updateIsConnected();
 
 	// Join room
 	socket.on('connect', function(){
@@ -269,8 +270,19 @@ $(document).ready(function(){
 	};
 
 	function updateIsConnected(){
-		var text = isConnected ? "Player Connected!" : "Player Disconnected";
-		$('#playerConnected').html(text);
+		var playerConnectedText = $('#playerConnected');
+		var text;
+		if(isConnected){
+			text = "Player Connected!";
+			playerConnectedText.removeClass('disconnected');
+			playerConnectedText.addClass('connected');
+		}
+		else{
+			text = "Player Disconnected"
+			playerConnectedText.removeClass('connected');
+			playerConnectedText.addClass('disconnected');
+		}
+		playerConnectedText.html(text);
 	};
 
 });
