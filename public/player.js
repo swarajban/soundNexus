@@ -47,6 +47,7 @@ $(document).ready(function(){
 	// Join room
 	socket.on('connect', function(){
 		socket.emit('joinRoom', {roomName: roomName});
+		startHeartbeat();
 	});
 
 	// -- Socket handlers -- //
@@ -295,5 +296,11 @@ $(document).ready(function(){
 	var pauseAll = function(){
 		pauseSoundCloud();
 		pauseYoutube();
+	};
+
+	var startHeartbeat = function(){
+		setInterval(function(){
+				socket.emit('heartbeat');
+		}, 1000);
 	};
 });

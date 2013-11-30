@@ -2,9 +2,13 @@ $(document).ready(function(){
 	var roomName = $('#roomName').val();
 	var socket = io.connect();
 
+	var isConnected = false;
+	var heartbeatIntervalId = null;
+
 	// Join room
 	socket.on('connect', function(){
 		socket.emit('joinRoom', {roomName: roomName});
+		heartbeatIntervalId = setInterval(onHeartbeatTimeout, 3000);
 	});
 
 	var currentScTitle = "";
@@ -137,6 +141,13 @@ $(document).ready(function(){
 		}
 	});
 
+	socket.on('heartbeat', function(){
+		isConnected = true;
+		updateIsConnected();
+		clearInterval(heartbeatIntervalId);
+		heartbeatIntervalId = setInterval(onHeartbeatTimeout, 3000);
+	});
+
 	// Soundcloud play info handler
 	var onScPlayInfo = function(data){
 		if(data.duration && data.title && data.currentPosition){
@@ -250,6 +261,16 @@ $(document).ready(function(){
 		var durationString = duration.toString().toHHMMSS();
 		var currentProgressString = currentProgress.toString().toHHMMSS();
 		return currentProgressString + "/" + durationString;
+	};
+
+	var onHeartbeatTimeout = function(){
+		isConnected = false;
+		updateIsConnected();
+	};
+
+	function updateIsConnected(){
+		var text = isConnected ? "Player Connected!" : "Player Disconnected";
+		$('#playerConnected').html(text);
 	};
 
 });

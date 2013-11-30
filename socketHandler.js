@@ -35,4 +35,8 @@ module.exports.listen = function(io, socket){
 	socket.on('pauseAll', function(data){
 		io.sockets.in(socket.room).emit('pauseAll');
 	});
+
+	socket.on('heartbeat', function(){
+		io.sockets.in(socket.room).emit('heartbeat');
+	});
 }
