@@ -41,8 +41,13 @@ $(document).ready(function(){
 
 
 	// Socket connection init
+	var roomName = $('#roomName').val();
 	var socket = io.connect();
 
+	// Join room
+	socket.on('connect', function(){
+		socket.emit('joinRoom', {roomName: roomName});
+	});
 
 	// -- Socket handlers -- //
 

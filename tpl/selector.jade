@@ -1,17 +1,19 @@
 !!!
 html
 	head
-		title= "Music Selector"
+		title= title
 		script(src='/vendor/jquery-2.0.3.js')
 		script(src='/vendor/jquery-ui.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='http://connect.soundcloud.com/sdk.js')
-		script(src='utils.js')
+		script(src='/utils.js')
 		script(src='/selector.js')
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 
 	body
+		.variables
+			input#roomName(type='hidden', value=roomName)
 		.input
 			.soundcloud
 				input#soundcloudLinkField(style='width:350px;')

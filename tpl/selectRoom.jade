@@ -1,0 +1,22 @@
+!!!
+html
+	head
+		title="Create / Select Room"
+		script(src='/vendor/jquery-2.0.3.js')
+		script(src='/vendor/jquery-ui.js')
+		script(src='/utils.js')
+		script(src='/selectRoom.js')
+		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+
+	body
+		.content
+			form
+				input#rooms(type='hidden', value=rooms)
+				select(name="selectRoom")
+					for item in rooms
+						option #{item}
+
+
+
+

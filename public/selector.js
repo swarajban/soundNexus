@@ -1,5 +1,11 @@
 $(document).ready(function(){
+	var roomName = $('#roomName').val();
 	var socket = io.connect();
+
+	// Join room
+	socket.on('connect', function(){
+		socket.emit('joinRoom', {roomName: roomName});
+	});
 
 	var currentScTitle = "";
 	var currentScDuration = -1;

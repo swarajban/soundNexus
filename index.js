@@ -1,11 +1,15 @@
 var express = require('express'),
 	http = require('http'),
 	routes = require('./routes/routes.js'),
-	io = require('socket.io');
+	io = require('socket.io'),
+	redis = require('redis');
 
 var app = express();
 var server = http.createServer(app);
 io = io.listen(server);
+
+//Redis
+global.redisClient = redis.createClient();
 
 
 // Jade
@@ -13,14 +17,18 @@ app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
+// Static files
+app.use(express.static(__dirname + '/public'));
+
 // Routes
 app.use(app.router);
 app.get('/', routes.index);
-app.get('/selector', routes.selector);
-app.get('/player', routes.player);
+app.get('/selector', routes.selectRoom);
+app.get('/player', routes.selectRoom);
+app.get('/selector/:roomName', routes.selector);
+app.get('/player/:roomName', routes.player);
+app.get('/selectRoom', routes.selectRoom);
 
-// Static files
-app.use(express.static(__dirname + '/public'));
 
 // Start socket
 io.sockets.on('connection', function(socket){
