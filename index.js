@@ -17,6 +17,9 @@ app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
+// favicon
+app.use(express.favicon(__dirname + '/public/favicon.ico'));
+
 // Static files
 app.use(express.static(__dirname + '/public'));
 
