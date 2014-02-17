@@ -24,6 +24,7 @@ html
 				input#soundcloudLinkField(placeholder='<enter soundcloud url>')
 				input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
 				input#soundcloudResumeButton(type='button', value='Resume Soundcloud')
+				input#soundcloudPauseButton.pauseButton(type='button', value='Pause')
 				label#soundcloudVolumeSliderLabel(for='soundcloudVolumeSlider') SoundCloud Volume
 				input#soundcloudVolumeSlider.volumeSlider.soundcloud(type='range', value='100', min='0', max='100')
 				label#soundcloudPlaybackSliderLabel(for='soundcloudPlaybackSlider') SoundCloud Seek
@@ -43,6 +44,7 @@ html
 				input#youtubeVideoIdField(placeholder='<enter youtube url>')
 				input#youtubePlayButton(type='button', value='Play Youtube Video')
 				input#youtubeResumeButton(type='button', value='Resume Youtube')
+				input#youtubePauseButton.pauseButton(type='button', value='Pause')
 				label#youtubeVolumeSliderLabel(for='youtubeVolumeSlider') YouTube Volume
 				input#youtubeVolumeSlider.volumeSlider.youtube(type='range', value='100', min='0', max='100')
 				label#youtubePlaybackLabel(for='youtubePlaybackSlider') YouTube Seek

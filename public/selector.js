@@ -103,7 +103,7 @@ $(document).ready(function(){
 		});
 	});
 
-	$('#pauseAll').click(function(){
+	$('.pauseButton').click(function(){
 		socket.emit('pauseAll');
 	});
 
