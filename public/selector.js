@@ -8,6 +8,7 @@ $(document).ready(function(){
 
 	// jquery selectors
 	var scPlaybackSlider = $('#soundcloudPlaybackSlider');
+	var ytPlaybackSlider = $('#youtubePlaybackSlider');
 
 	// Join room
 	socket.on('connect', function(){
@@ -45,7 +46,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#soundcloudPlaybackSlider').slider({
+	scPlaybackSlider.slider({
 		stop: function () {
 			socket.emit('seekTo', {type: 'soundcloud', value: this.value});
 		}
@@ -75,24 +76,14 @@ $(document).ready(function(){
 	});
 
 	$('#youtubeVolumeSlider').slider({
-		orientation: "vertical",
-		range: "min",
-		min: 0,
-		max: 100,
-		value: 100,
-		slide: function(event, ui){
-			socket.emit('changeVolume', {type: 'youtube', value: ui.value});
+		stop: function () {
+			socket.emit('changeVolume', {type: 'youtube', value: this.value});
 		}
 	});
 
-	$('#youtubePlaybackSlider').slider({
-		orientation: "horizontal",
-		range: "min",
-		min: 0,
-		max: 100,
-		value: 0,
-		stop: function(event, ui){
-			socket.emit('seekTo', {type: 'youtube', value: ui.value});
+	ytPlaybackSlider.slider({
+		stop: function () {
+			socket.emit('seekTo', {type: 'youtube', value: this.value});
 		}
 	});
 
@@ -201,9 +192,11 @@ $(document).ready(function(){
 	var updateYtProgress = function(duration, currentPosition){
 		if(duration != currentYtDuration){
 			currentYtDuration = duration;
-			$('#youtubePlaybackSlider').slider("option", "max", currentYtDuration);
+			ytPlaybackSlider.attr("max", currentYtDuration);
+			ytPlaybackSlider.slider('refresh');
 		}
-		$('#youtubePlaybackSlider').slider("option", "value", currentPosition);
+		ytPlaybackSlider.val(currentPosition);
+		ytPlaybackSlider.slider('refresh');
 
 		var progressString = getProgressString(currentYtDuration, currentPosition);
 		$('#youtubeProgressText').html(progressString);

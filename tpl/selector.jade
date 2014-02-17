@@ -19,6 +19,8 @@ html
 			span#playerConnected
 		.input
 			.soundcloud
+				h3 SoundCloud
+				label#soundcloudLinkInputLabel(for='soundcloudLinkField') SoundCloud URL
 				input#soundcloudLinkField(placeholder='<enter soundcloud url>')
 				input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
 				input#soundcloudResumeButton(type='button', value='Resume Soundcloud')
@@ -28,20 +30,27 @@ html
 				input#soundcloudPlaybackSlider.playbackSlider.soundcloud(type='range', value='0', min='0', max='100', data-highlight="true")
 				p#soundcloudTitle.songTitle
 				p#soundcloudProgressText.playerProgressText
-				label#soundcloudSearchQueryLabel(for='soundcloudSearchQuery') Search SoundCloud
-				input#soundcloudSearchQuery(placeholder='soundcloud query')
+				label#soundcloudSearchQueryLabel(for='soundcloudSearchQuery') SoundCloud Query
+				input#soundcloudSearchQuery(placeholder='e.g. lee foss bpm')
 				input#soundcloudSearchButton(type='button', value='Search Soundcloud')
 				ul#soundcloudSearchResult.searchResults(data-role='listview')
+				br
+				br
 
 			.youtube
-				input#youtubeVideoIdField(style='width:350px;')
+				h3 YouTube
+				label#youtubeIdInputLabel(for='youtubeVideoIdField') YouTube Video URL
+				input#youtubeVideoIdField(placeholder='<enter youtube url>')
 				input#youtubePlayButton(type='button', value='Play Youtube Video')
 				input#youtubeResumeButton(type='button', value='Resume Youtube')
-				#youtubeVolumeSlider.volumeSlider.youtube
-				#youtubePlaybackSlider.playbackSlider.youtube
+				label#youtubeVolumeSliderLabel(for='youtubeVolumeSlider') YouTube Volume
+				input#youtubeVolumeSlider.volumeSlider.youtube(type='range', value='100', min='0', max='100')
+				label#youtubePlaybackLabel(for='youtubePlaybackSlider') YouTube Seek
+				input#youtubePlaybackSlider.playbackSlider.youtube(type='range', value='0', min='0', max='100', data-highlight="true")
 				p#youtubeTitle.songTitle
 				p#youtubeProgressText.playerProgressText
-				input#youtubeSearchQuery
+				label#youtubeQueryLabel(for='youtubeSearchQuery') Youtube Query
+				input#youtubeSearchQuery(placeholder='e.g. mat zo bipolar')
 				input#youtubeSearchButton(type='button', value='Search Youtube')
 				ul#youtubeSearchResult.searchResults
 		br
