@@ -1,14 +1,15 @@
-!!!
+doctype html
 html
 	head
 		title= title
+		meta(name='viewport', content='width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0')
 		script(src='/vendor/jquery-2.0.3.js')
-		script(src='/vendor/jquery-ui.js')
+		script(src='/vendor/jquery.mobile-1.4.1.min.js')
 		script(src='/socket.io/socket.io.js')
 		script(src='http://connect.soundcloud.com/sdk.js')
 		script(src='/utils.js')
 		script(src='/selector.js')
-		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
+		link(rel='stylesheet', href='/stylesheets/jquery.mobile-1.4.1.min.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 
 	body
@@ -18,16 +19,19 @@ html
 			span#playerConnected
 		.input
 			.soundcloud
-				input#soundcloudLinkField(style='width:350px;')
+				input#soundcloudLinkField(placeholder='<enter soundcloud url>')
 				input#soundcloudPlayButton(type='button', value='Play Soundcloud Link')
 				input#soundcloudResumeButton(type='button', value='Resume Soundcloud')
-				#soundcloudVolumeSlider.volumeSlider.soundcloud
-				#soundcloudPlaybackSlider.playbackSlider.soundcloud
+				label#soundcloudVolumeSliderLabel(for='soundcloudVolumeSlider') SoundCloud Volume
+				input#soundcloudVolumeSlider.volumeSlider.soundcloud(type='range', value='100', min='0', max='100')
+				label#soundcloudPlaybackSliderLabel(for='soundcloudPlaybackSlider') SoundCloud Seek
+				input#soundcloudPlaybackSlider.playbackSlider.soundcloud(type='range', value='0', min='0', max='100', data-highlight="true")
 				p#soundcloudTitle.songTitle
 				p#soundcloudProgressText.playerProgressText
-				input#soundcloudSearchQuery
+				label#soundcloudSearchQueryLabel(for='soundcloudSearchQuery') Search SoundCloud
+				input#soundcloudSearchQuery(placeholder='soundcloud query')
 				input#soundcloudSearchButton(type='button', value='Search Soundcloud')
-				ul#soundcloudSearchResult.searchResults
+				ul#soundcloudSearchResult.searchResults(data-role='listview')
 
 			.youtube
 				input#youtubeVideoIdField(style='width:350px;')

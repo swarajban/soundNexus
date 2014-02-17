@@ -6,6 +6,9 @@ $(document).ready(function(){
 	var heartbeatIntervalId = null;
 	updateIsConnected();
 
+	// jquery selectors
+	var scPlaybackSlider = $('#soundcloudPlaybackSlider');
+
 	// Join room
 	socket.on('connect', function(){
 		socket.emit('joinRoom', {roomName: roomName});
@@ -35,25 +38,16 @@ $(document).ready(function(){
 		socket.emit('resume', {type: 'soundcloud'});
 	});
 
+
 	$('#soundcloudVolumeSlider').slider({
-		orientation: "vertical",
-		range: "min",
-		min: 0,
-		max: 100,
-		value: 100,
-		slide: function(event, ui){
-			socket.emit('changeVolume', {type: 'soundcloud', value: ui.value});
+		stop: function () {
+			socket.emit('changeVolume', {type: 'soundcloud', value: this.value});
 		}
 	});
 
 	$('#soundcloudPlaybackSlider').slider({
-		orientation: "horizontal",
-		range: "min",
-		min: 0,
-		max: 100,
-		value: 0,
-		stop: function(event, ui){
-			socket.emit('seekTo', {type: 'soundcloud', value: ui.value});
+		stop: function () {
+			socket.emit('seekTo', {type: 'soundcloud', value: this.value});
 		}
 	});
 
@@ -169,9 +163,11 @@ $(document).ready(function(){
 	var updateScProgress = function(duration, currentPosition){
 		if(duration != currentScDuration){
 			currentScDuration = duration;
-			$('#soundcloudPlaybackSlider').slider("option", "max", currentScDuration);
+			scPlaybackSlider.attr("max", currentScDuration);
+			scPlaybackSlider.slider('refresh');
 		}
-		$('#soundcloudPlaybackSlider').slider("option", "value", currentPosition);
+		scPlaybackSlider.val(currentPosition);
+		scPlaybackSlider.slider('refresh');
 
 		var progressString = getProgressString(currentScDuration, currentPosition);
 		$('#soundcloudProgressText').html(progressString);

@@ -102,8 +102,11 @@ $(document).ready(function(){
 					soundcloudSeekTo(value);
 					break;
 
-				default:
+				case 'youtube':
 					youtubeSeekTo(value);
+					break;
+
+				default:
 					break;
 			}
 		}

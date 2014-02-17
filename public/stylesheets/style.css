@@ -1,26 +1,26 @@
-.volumeSlider{
-    height: 200px;
-}
+/*.volumeSlider{*/
+    /*height: 200px;*/
+/*}*/
 
-.playbackSlider{
-    width: 300px;
-}
+/*.playbackSlider{*/
+    /*width: 300px;*/
+/*}*/
 
-.soundcloud .ui-slider-range{
-    background: #ff7700;
-}
+/*.soundcloud .ui-slider-range{*/
+    /*background: #ff7700;*/
+/*}*/
 
-.soundcloud .ui-slider-handle{
-    border-color: #ff7700;
-}
+/*.soundcloud .ui-slider-handle{*/
+    /*border-color: #ff7700;*/
+/*}*/
 
-.youtube .ui-slider-range{
-    background: #c4302b;
-}
+/*.youtube .ui-slider-range{*/
+    /*background: #c4302b;*/
+/*}*/
 
-.youtube .ui-slider-handle{
-    border-color: #c4302b;
-}
+/*.youtube .ui-slider-handle{*/
+    /*border-color: #c4302b;*/
+/*}*/
 
 
 .searchResults{
