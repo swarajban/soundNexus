@@ -267,7 +267,14 @@ $(document).ready(function(){
 			var idRegex = /\&v\=(\S+)$/;
 			var result = idRegex.exec(currentUrl);
 			if(result){
-				ytCurrentId= result[1];
+				ytCurrentId = result[1];
+			}
+			else {
+				idRegex = /\?v\=(\S+)$/;
+				result = idRegex.exec(currentUrl);
+				if (result) {
+					ytCurrentId = result[1];
+				}
 			}
 			ytData.id = ytCurrentId;
 			ytData.currentPosition = youtubePlayer.getCurrentTime();
