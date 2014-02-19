@@ -31,7 +31,7 @@ $(document).ready(function(){
 	};
 
 	$.getScript("https://www.youtube.com/iframe_api", function(){
-		ytInt = setInterval(function(){
+		var ytInt = setInterval(function(){
 			if(typeof YT === 'object'){
 				initYoutube();
 				clearInterval(ytInt);
@@ -216,13 +216,10 @@ $(document).ready(function(){
 	// Youtube player state change callback stores video id and duration
 	var onYoutubePlayerStateChange = function(event){
 		if(event.data == YT.PlayerState.PLAYING){
-			ytCurrentDuration = youtubePlayer.getDuration();
-			var currentUrl = youtubePlayer.getVideoUrl();
-			var idRegex = /\&v\=(\S+)$/;
-			var result = idRegex.exec(currentUrl);
-			if(result){
-				ytCurrentId= result[1];
-			}
+			togglePollYoutubeProgress(true);
+		}
+		if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+			togglePollYoutubeProgress(false);
 		}
 	};
 
@@ -265,7 +262,13 @@ $(document).ready(function(){
 		if(youtubeLoaded){
 			var ytData = {};
 			ytData.type = 'youtube';
-			ytData.duration = ytCurrentDuration;
+			ytData.duration = youtubePlayer.getDuration();
+			var currentUrl = youtubePlayer.getVideoUrl();
+			var idRegex = /\&v\=(\S+)$/;
+			var result = idRegex.exec(currentUrl);
+			if(result){
+				ytCurrentId= result[1];
+			}
 			ytData.id = ytCurrentId;
 			ytData.currentPosition = youtubePlayer.getCurrentTime();
 			socket.emit('playInfo', ytData);
