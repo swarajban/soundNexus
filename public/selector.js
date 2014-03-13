@@ -10,6 +10,9 @@ $(document).ready(function(){
 	var scPlaybackSlider = $('#soundcloudPlaybackSlider');
 	var ytPlaybackSlider = $('#youtubePlaybackSlider');
 
+	$( "#youtubeSearchResult" ).listview();
+	$( "#soundcloudSearchResult" ).listview();
+
 	// Join room
 	socket.on('connect', function(){
 		socket.emit('joinRoom', {roomName: roomName});
@@ -190,8 +193,8 @@ $(document).ready(function(){
 				addClass('soundcloudSearchResult searchResultItem').
 				click(clickHandler).
 				appendTo(scSearchResults);
-			$('#soundcloudSearchResult').listview('refresh');
 		}
+		$('#soundcloudSearchResult').listview('refresh');
 	}
 
 	// Youtube play info handler
@@ -248,13 +251,12 @@ $(document).ready(function(){
 				addClass('youtubeSearchResult searchResultItem').
 				click(clickHandler).
 				appendTo(ytSearchResults);
-			$('#youtubeSearchResult').listview('refresh');
 		}
+		$('#youtubeSearchResult').listview('refresh');
 	};
 
 	// Returns search result click handler closure
 	var getOnSearchResultClickHandler = function(searchFieldElement, type, link){
-		searchFieldElement.val("");
 		return function(){
 			socket.emit('playLink', {type: type, link: link});
 		}
