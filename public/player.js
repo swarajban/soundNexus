@@ -137,9 +137,20 @@ $(document).ready(function(){
 	// Loads and plays a new soundcloud link
 	var playSoundCloudLink = function(link){
 		if(scLoaded){
-			scWidget.load(link, {auto_play: true, callback: storeSoundcloudTrackInfo});
-			scCurrentTrackInfo = {};
-			toggleSoundcloudPlayProgressEvent(true);
+      // Get current volume, and set volume to previous value on new track loaded
+      scWidget.getVolume(
+        function onGetVolume (volume) {
+          scWidget.load(link, {
+            auto_play: true,
+            callback: function onNewTrackLoaded () {
+              scCurrentTrackInfo = {};
+              toggleSoundcloudPlayProgressEvent(true);
+              storeSoundcloudTrackInfo();
+              scWidget.setVolume(volume);
+            }
+          });
+        }
+      );
 		}
 	};
 
