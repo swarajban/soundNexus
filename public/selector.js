@@ -30,19 +30,6 @@ $(document).ready(function(){
 	var currentYtId = "";
 	var currentYtDuration = -1;
 
-//	var list = $('#playlist')[0];
-//	new Slip(list);
-//
-//	list.addEventListener('slip:reorder', function (event) {
-//		event.target.parentNode.insertBefore(event.target, event.detail.insertBefore);
-//		console.log('re-ordered');
-//	});
-//
-//	list.addEventListener('slip:beforewait', function (event) {
-//		event.preventDefault();
-//	});
-
-
 
 	// Soundcloud UI
 	$('#soundcloudPlayButton').click(function(){
