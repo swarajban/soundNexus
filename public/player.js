@@ -154,7 +154,7 @@ $(document).ready(function(){
 	// Changes soundcloud volume
 	var changeSoundcloudVolume = function(value){
 		if(scLoaded){
-			scWidget.setVolume(value);
+			scWidget.setVolume(value / 100);
 			console.log("New soundcloud volume: " + value);
 		}
 	};
