@@ -32,11 +32,18 @@ $(document).ready(function(){
 
 
 	// Soundcloud UI
-	$('#soundcloudPlayButton').click(function(){
-		var link = $('#soundcloudLinkField').val();
-		socket.emit('playLink', {type: 'soundcloud', link: link});
-		$('#soundcloudLinkField').val("");
-	});
+	$('#soundcloudPlayButton').click(playSoundcloudLink);
+  $('#soundcloudLinkField').keyup(function onSubmitSoundcloudLink (e) {
+    if (e.keyCode === 13) {
+      playSoundcloudLink();
+    }
+  });
+
+  function playSoundcloudLink () {
+    var link = $('#soundcloudLinkField').val();
+    socket.emit('playLink', {type: 'soundcloud', link: link});
+    $('#soundcloudLinkField').val("");
+  }
 
 	$('#soundcloudResumeButton').click(function(){
 		socket.emit('resume', {type: 'soundcloud'});
@@ -55,24 +62,38 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#soundcloudSearchButton').click(function(){
-		var query = $('#soundcloudSearchQuery').val();
-		SC.get('/tracks', {
-			q: query
-		}, onGetSoundcloudSearch);
-	});
+	$('#soundcloudSearchButton').click(searchSoundcloud);
+  $('#soundcloudSearchQuery').keyup(function onSubmitSoundcloudSearch (e) {
+    if (e.keyCode === 13) {
+      searchSoundcloud();
+    }
+  });
+
+  function searchSoundcloud () {
+    var query = $('#soundcloudSearchQuery').val();
+    SC.get('/tracks', {
+      q: query
+    }, onGetSoundcloudSearch);
+  }
 
 	// Youtube UI
-	$('#youtubePlayButton').click(function(){
-		var videoUrl = $('#youtubeVideoIdField').val();
-		var idRegex = /\?v\=(\S+)$/;
-		var result = idRegex.exec(videoUrl);
-		if(result){
-			var videoId = result[1];
-			socket.emit('playLink', {type: 'youtube', link: videoId});
-		}
-		$('#youtubeVideoIdField').val("");
-	});
+	$('#youtubePlayButton').click(playYoutubeLink);
+  $('#youtubeVideoIdField').keyup(function onSubmitYoutubeLink (e) {
+    if (e.keyCode === 13) {
+      playYoutubeLink();
+    }
+  });
+
+  function playYoutubeLink () {
+    var videoUrl = $('#youtubeVideoIdField').val();
+    var idRegex = /\?v\=(\S+)$/;
+    var result = idRegex.exec(videoUrl);
+    if(result){
+      var videoId = result[1];
+      socket.emit('playLink', {type: 'youtube', link: videoId});
+    }
+    $('#youtubeVideoIdField').val("");
+  }
 
 	$('#youtubeResumeButton').click(function(){
 		socket.emit('resume', {type: 'youtube'});
@@ -90,25 +111,39 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#youtubeSearchButton').click(function(){
-		var query = $('#youtubeSearchQuery').val();
-		var baseYtDataApiUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet';
-		var searchUrl = baseYtDataApiUrl + '&key=' + ytAPIKey;
-		searchUrl += '&maxResults=10';
-		searchUrl += '&q=' + query;
-		$.ajax({
-			url: searchUrl,
-			type: "GET",
-			"dataType": "json",
-			success: function(result){
-				showYoutubeSearchResult(result.items);
-			}
-		});
-	});
+	$('#youtubeSearchButton').click(searchYoutube);
+  $('#youtubeSearchQuery').keyup(function onSubmitYoutubeSearch (e) {
+    if (e.keyCode === 13) {
+      searchYoutube();
+    }
+  });
 
-	$('.pauseButton').click(function(){
-		socket.emit('pauseAll');
-	});
+  function searchYoutube () {
+    var query = $('#youtubeSearchQuery').val();
+    var baseYtDataApiUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet';
+    var searchUrl = baseYtDataApiUrl + '&key=' + ytAPIKey;
+    searchUrl += '&maxResults=10';
+    searchUrl += '&q=' + query;
+    $.ajax({
+      url: searchUrl,
+      type: "GET",
+      "dataType": "json",
+      success: function(result){
+        showYoutubeSearchResult(result.items);
+      }
+    });
+  }
+
+	$('.pauseButton').click(pause);
+  $(document).keyup( function pauseOnSpace (e) {
+    if (e.keyCode === 32) {
+      pause();
+    }
+  });
+
+  function pause () {
+    socket.emit('pauseAll');
+  }
 
 
 	// Handle currently playing track's info
