@@ -135,12 +135,7 @@ $(document).ready(function(){
   }
 
 	$('.pauseButton').click(pause);
-  $(document).keyup( function pauseOnSpace (e) {
-    if (e.keyCode === 32) {
-      pause();
-    }
-  });
-
+  
   function pause () {
     socket.emit('pauseAll');
   }
