@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "description": "Home web media player",
     "dependencies": {
-      "socket.io": "latest",
+      "socket.io": "1.1.0",
       "express": "3.4.8",
       "jade": "1.3.0",
 	    "redis": "0.10.1"
